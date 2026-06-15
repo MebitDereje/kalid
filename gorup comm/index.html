@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GroupComm - Group Communication App</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <i class="fas fa-comments"></i>
+                <span>Mebit Dereje </span>
+            </div>
+            <div class="navbar-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-profile-nav">
+                    <img src="assets/images/default-avatar.png" alt="User Avatar" id="navUserAvatar">
+                    <span id="navUserName">chat</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main App Layout -->
+        <div class="app-main">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <button class="btn btn-primary" id="createGroupBtn">
+                        <i class="fas fa-plus"></i> Create Group
+                    </button>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search messages..." class="search-input">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+
+                <!-- Groups List -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Groups</h3>
+                    <ul class="groups-list" id="groupsList">
+                        <li class="group-item active" data-group-id="1">
+                            <div class="group-info">
+                                <img src="assets/images/group1.png" alt="Group" class="group-avatar">
+                                <div class="group-details">
+                                    <h4>Development Team</h4>
+                                    <p>Last message: Hey everyone!</p>
+                                </div>
+                                <span class="unread-badge">3</span>
+                            </div>
+                        </li>
+                        <li class="group-item" data-group-id="2">
+                            <div class="group-info">
+                                <img src="assets/images/group2.png" alt="Group" class="group-avatar">
+                                <div class="group-details">
+                                    <h4>Marketing Team</h4>
+                                    <p>Last message: Meeting at 3PM</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contacts List -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Contacts</h3>
+                    <ul class="contacts-list" id="contactsList">
+                        <li class="contact-item" data-contact-id="1">
+                            <div class="contact-info">
+                                <img src="assets/images/avatar1.png" alt="Contact" class="contact-avatar">
+                                <div class="contact-status online"></div>
+                                <div class="contact-details">
+                                    <h4>Alice Johnson</h4>
+                                    <span class="status-text">Online</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="contact-item" data-contact-id="2">
+                            <div class="contact-info">
+                                <img src="assets/images/avatar2.png" alt="Contact" class="contact-avatar">
+                                <div class="contact-status offline"></div>
+                                <div class="contact-details">
+                                    <h4>Bob Smith</h4>
+                                    <span class="status-text">Offline</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Dashboard Toggle -->
+                <div class="dashboard-toggle-container">
+                    <button class="btn btn-secondary" id="dashboardToggle">
+                        <i class="fas fa-chart-bar"></i> Dashboard
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Chat Area -->
+            <main class="chat-area">
+                <!-- Chat Header -->
+                <header class="chat-header">
+                    <div class="chat-header-info">
+                        <img src="assets/images/group1.png" alt="Group" class="chat-group-avatar">
+                        <div class="chat-details">
+                            <h3 id="currentGroupName">Development Team</h3>
+                            <span id="memberCount">12 members, 8 online</span>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="btn-icon" id="groupInfoBtn" aria-label="Group Info">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                        <button class="btn-icon" id="groupSettingsBtn" aria-label="Group Settings">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Messages Container -->
+                <div class="messages-container" id="messagesContainer">
+                    <div class="message-date">Today</div>
+
+                    <!-- Sample Message - Received -->
+                    <div class="message received" data-message-id="1">
+                        <img src="assets/images/avatar1.png" alt="Avatar" class="message-avatar">
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">Alice Johnson</span>
+                                <span class="message-time">10:30 AM</span>
+                            </div>
+                            <div class="message-text">Hey everyone! How's the project going?</div>
+                            <div class="message-actions">
+                                <button class="reaction-btn" data-reaction="like"><i class="fas fa-thumbs-up"></i></button>
+                                <button class="reaction-btn" data-reaction="love"><i class="fas fa-heart"></i></button>
+                                <button class="reply-btn"><i class="fas fa-reply"></i></button>
+                            </div>
+                            <div class="reactions">
+                                <span class="reaction"><i class="fas fa-thumbs-up"></i> 5</span>
+                                <span class="reaction"><i class="fas fa-heart"></i> 2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sample Message - Sent -->
+                    <div class="message sent" data-message-id="2">
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">You</span>
+                                <span class="message-time">10:32 AM</span>
+                            </div>
+                            <div class="message-text">Going great! We're on track for the deadline.</div>
+                            <div class="message-actions">
+                                <button class="reaction-btn" data-reaction="like"><i class="fas fa-thumbs-up"></i></button>
+                                <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                                <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" id="typingIndicator">
+                    <span>Bob Smith is typing... </span>
+                    <div class="typing-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <!-- Reply Preview -->
+                <div class="reply-preview" id="replyPreview">
+                    <div class="reply-content">
+                        <span>Replying to: <strong>Alice Johnson</strong></span>
+                        <p class="reply-text">Hey everyone! How's the project going?</p>
+                    </div>
+                    <button class="cancel-reply" id="cancelReply">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Message Input Area -->
+                <footer class="message-input-container">
+                    <div class="input-actions">
+                        <button class="btn-icon emoji-btn" id="emojiBtn" aria-label="Add Emoji">
+                            <i class="fas fa-smile"></i>
+                        </button>
+                        <button class="btn-icon attachment-btn" id="attachmentBtn" aria-label="Attach File">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="btn-icon voice-btn" id="voiceBtn" aria-label="Record Voice">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                    </div>
+                    <div class="input-wrapper">
+                        <textarea id="messageInput" placeholder="Type a message..." rows="1"></textarea>
+                        <button class="btn-send" id="sendBtn" aria-label="Send Message">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <input type="file" id="fileInput" accept="image/*,.pdf,video/*" multiple>
+                </footer>
+            </main>
+
+            <!-- Group Info Panel -->
+            <aside class="group-panel" id="groupPanel">
+                <div class="panel-header">
+                    <h3>Group Information</h3>
+                    <button class="btn-icon close-panel" id="closePanel">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="panel-content">
+                    <div class="group-icon-section">
+                        <img src="assets/images/group1.png" alt="Group" id="panelGroupAvatar">
+                        <button class="btn btn-secondary btn-sm">
+                            <i class="fas fa-camera"></i> Change Icon
+                        </button>
+                    </div>
+                    <div class="group-info-section">
+                        <h2 id="panelGroupName">Development Team</h2>
+                        <p id="panelGroupDesc">Project development discussions and updates</p>
+                    </div>
+                    <div class="panel-actions">
+                        <button class="btn btn-secondary btn-block" id="editGroupBtn">
+                            <i class="fas fa-edit"></i> Edit Group
+                        </button>
+                        <button class="btn btn-secondary btn-block" id="addMemberBtn">
+                            <i class="fas fa-user-plus"></i> Add Members
+                        </button>
+                        <button class="btn btn-secondary btn-block" id="createPollBtn">
+                            <i class="fas fa-poll"></i> Create Poll
+                        </button>
+                        <button class="btn btn-secondary btn-block" id="scheduleEventBtn">
+                            <i class="fas fa-calendar"></i> Schedule Event
+                        </button>
+                        <button class="btn btn-danger btn-block" id="leaveGroupBtn">
+                            <i class="fas fa-sign-out-alt"></i> Leave Group
+                        </button>
+                        <button class="btn btn-danger btn-block" id="deleteGroupBtn">
+                            <i class="fas fa-trash"></i> Delete Group
+                        </button>
+                    </div>
+                    <div class="members-section">
+                        <h4>Members (12)</h4>
+                        <ul class="members-list" id="membersList">
+                            <li class="member-item">
+                                <img src="assets/images/avatar1.png" alt="Member">
+                                <span>Alice Johnson (Admin)</span>
+                                <span class="member-status online"></span>
+                            </li>
+                            <li class="member-item">
+                                <img src="assets/images/avatar2.png" alt="Member">
+                                <span>Bob Smith</span>
+                                <span class="member-status offline"></span>
+                            </li>
+                            <li class="member-item">
+                                <img src="assets/images/avatar3.png" alt="Member">
+                                <span>Charlie Brown</span>
+                                <span class="member-status online"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Dashboard Modal -->
+        <div class="modal" id="dashboardModal">
+            <div class="modal-content dashboard-modal">
+                <div class="modal-header">
+                    <h2>Dashboard</h2>
+                    <button class="btn-icon close-modal" id="closeDashboard">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-users stat-icon"></i>
+                            <div class="stat-info">
+                                <h3>Total Groups</h3>
+                                <span class="stat-value">5</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-user-check stat-icon"></i>
+                            <div class="stat-info">
+                                <h3>Active Users</h3>
+                                <span class="stat-value">23</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-comments stat-icon"></i>
+                            <div class="stat-info">
+                                <h3>Messages Today</h3>
+                                <span class="stat-value">156</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-file stat-icon"></i>
+                            <div class="stat-info">
+                                <h3>Files Shared</h3>
+                                <span class="stat-value">12</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recent-activities">
+                        <h3>Recent Activities</h3>
+                        <ul class="activities-list" id="activitiesList">
+                            <li class="activity-item">
+                                <i class="fas fa-user-plus activity-icon"></i>
+                                <span>New member joined: Development Team</span>
+                                <span class="activity-time">2 hours ago</span>
+                            </li>
+                            <li class="activity-item">
+                                <i class="fas fa-file-upload activity-icon"></i>
+                                <span>File shared: project.pdf</span>
+                                <span class="activity-time">3 hours ago</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Group Modal -->
+        <div class="modal" id="createGroupModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Create New Group</h2>
+                    <button class="btn-icon close-modal" id="closeCreateGroup">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="createGroupForm" class="modal-form">
+                    <div class="form-group">
+                        <label for="groupName">Group Name *</label>
+                        <input type="text" id="groupName" name="groupName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="groupDescription">Description</label>
+                        <textarea id="groupDescription" name="groupDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="groupIcon">Group Icon</label>
+                        <input type="file" id="groupIcon" name="groupIcon" accept="image/*">
+                        <div class="preview-container" id="iconPreview"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Create Group</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Group Modal -->
+        <div class="modal" id="editGroupModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit Group</h2>
+                    <button class="btn-icon close-modal" id="closeEditGroup">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="editGroupForm" class="modal-form">
+                    <div class="form-group">
+                        <label for="editGroupName">Group Name *</label>
+                        <input type="text" id="editGroupName" name="groupName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editGroupDescription">Description</label>
+                        <textarea id="editGroupDescription" name="groupDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Announcement</label>
+                        <textarea id="groupAnnouncement" rows="2" placeholder="Group announcement..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Member Modal -->
+        <div class="modal" id="addMemberModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add Members</h2>
+                    <button class="btn-icon close-modal" id="closeAddMember">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="addMemberForm" class="modal-form">
+                    <div class="form-group">
+                        <label for="memberEmail">Email or Username</label>
+                        <input type="text" id="memberEmail" name="memberEmail" placeholder="Enter email or username">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Add Member</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Emoji Picker -->
+        <div class="emoji-picker" id="emojiPicker">
+            <div class="emoji-categories">
+                <button class="emoji-category active" data-category="smileys">😊</button>
+                <button class="emoji-category" data-category="gestures">👍</button>
+                <button class="emoji-category" data-category="food">🍕</button>
+            </div>
+            <div class="emoji-grid" id="emojiGrid">
+                <span class="emoji">😀</span>
+                <span class="emoji">😃</span>
+                <span class="emoji">😄</span>
+                <span class="emoji">😁</span>
+                <span class="emoji">😆</span>
+                <span class="emoji">😅</span>
+                <span class="emoji">😂</span>
+                <span class="emoji">🤣</span>
+                <span class="emoji">😊</span>
+                <span class="emoji">😇</span>
+                <span class="emoji">😎</span>
+                <span class="emoji">🥳</span>
+            </div>
+        </div>
+
+        <!-- File Preview Modal -->
+        <div class="modal" id="filePreviewModal">
+            <div class="modal-content preview-content">
+                <div class="modal-header">
+                    <h2>Preview File</h2>
+                    <button class="btn-icon close-modal" id="closeFilePreview">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="preview-body" id="filePreviewBody">
+                    <!-- Dynamic preview content -->
+                </div>
+                <div class="preview-actions">
+                    <button class="btn btn-secondary" id="cancelFile">Cancel</button>
+                    <button class="btn btn-primary" id="sendFile">Send File</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voice Recording Modal -->
+        <div class="modal" id="voiceModal">
+            <div class="modal-content voice-content">
+                <div class="modal-header">
+                    <h2>Record Voice Message</h2>
+                    <button class="btn-icon close-modal" id="closeVoiceModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="voice-recorder">
+                    <div class="recording-indicator">
+                        <div class="pulse-ring"></div>
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <span id="recordingTime">00:00</span>
+                    <div class="voice-controls">
+                        <button class="btn btn-danger" id="stopRecording">
+                            <i class="fas fa-stop"></i> Stop
+                        </button>
+                        <button class="btn btn-primary" id="sendVoiceMessage" disabled>
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Poll Modal -->
+        <div class="modal" id="pollModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Create Poll</h2>
+                    <button class="btn-icon close-modal" id="closePollModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="pollForm" class="modal-form">
+                    <div class="form-group">
+                        <label for="pollQuestion">Question *</label>
+                        <input type="text" id="pollQuestion" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Options *</label>
+                        <div id="pollOptions">
+                            <input type="text" class="poll-option" placeholder="Option 1" required>
+                            <input type="text" class="poll-option" placeholder="Option 2" required>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm" id="addOption">
+                            <i class="fas fa-plus"></i> Add Option
+                        </button>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Create Poll</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Event Scheduler Modal -->
+        <div class="modal" id="eventModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Schedule Event</h2>
+                    <button class="btn-icon close-modal" id="closeEventModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="eventForm" class="modal-form">
+                    <div class="form-group">
+                        <label for="eventTitle">Event Title *</label>
+                        <input type="text" id="eventTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">Date *</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventTime">Time *</label>
+                        <input type="time" id="eventTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription">Description</label>
+                        <textarea id="eventDescription" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Schedule Event</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Notification Toast Container -->
+        <div class="toast-container" id="toastContainer"></div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/messages.js"></script>
+    <script src="js/groups.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
